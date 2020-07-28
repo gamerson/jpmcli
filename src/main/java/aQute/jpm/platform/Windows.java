@@ -131,6 +131,9 @@ public class Windows extends Platform {
 		// Make the ini file
 		//
 		File ini = new File(f.getAbsolutePath().replaceAll("\\.exe$", ".ini"));
+		if (ini.exists()) {
+			return null;
+		}
 		Charset defaultCharset = Charset.defaultCharset();
 		try (PrintWriter pw = new PrintWriter(ini, defaultCharset.name())) {
 			pw.printf("main.class=%s%n", data.main);
@@ -184,7 +187,7 @@ public class Windows extends Platform {
 	public void deleteCommand(CommandData cmd) throws Exception {
 		String executable = getExecutable(cmd);
 		File f = new File(executable);
-		File fj = new File(executable + ".ini");
+		File fj = new File(f.getAbsolutePath().replaceAll("\\.exe$", ".ini"));
 		if (cmd.name.equals("jpm")) {
 			logger.debug("leaving jpm behind");
 			return;

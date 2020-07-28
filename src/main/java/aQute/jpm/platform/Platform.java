@@ -146,6 +146,9 @@ public abstract class Platform {
 	protected void process(String resource, CommandData data, String path, Map<String,String> map, String... extra)
 			throws Exception {
 		File file = new File(path);
+		if(file.exists()) {
+			return;
+		}
 		copy(getClass().getResourceAsStream(resource), file);
 		Sed sed = new Sed(file);
 		sed.setBackup(false);
